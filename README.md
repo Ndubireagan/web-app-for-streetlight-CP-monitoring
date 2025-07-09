@@ -13,7 +13,7 @@ This is ideal for remote IoT or industrial applications where internet connectiv
 - 🧠 Store parsed and raw messages in a **local SQLite database**
 - 🌐 View data in a **responsive Flask web app** with TailwindCSS styling
 - 🚨 Highlight alerts such as **overvoltage** or **undervoltage**
-- 💻 Fully offline — runs on local computers without cloud dependencies
+- 💻 Fully offline , runs on local computers without cloud dependencies
 
 ---
 
@@ -44,11 +44,11 @@ This is ideal for remote IoT or industrial applications where internet connectiv
 
 Your GSM device should send messages in the following format:
 
-V:220.5 I:1.25 P:275.6
+**V:220.5 I:1.25 P:275.6**
 
 Optional alerts like:
 
-!!OVERVOLTAGE DETECTED!!
+**!!OVERVOLTAGE DETECTED!!**
 
 These messages are fully logged and visualized.
 
@@ -63,16 +63,17 @@ These messages are fully logged and visualized.
    
 Start SMS Reader (run this to collect new SMS and save to DB):
 
-python sm_reader.py
+  `python sm_reader.py`
+
 
 Launch the Web App:
-python app.py
+   ``python app.py``
 
-View Dashboard
+## View Dashboard
 Open your browser at:
 http://localhost:5000
 
-📌 Use Cases
+## 📌 Use Cases
 Remote power system monitoring (solar, industrial)
 
 Agriculture sensors with GSM capabilities
@@ -81,7 +82,7 @@ Offline IoT control panels
 
 Emergency alert logging via SMS
 
-🧱 Future Improvements
+## 🧱 Future Improvements
 Automatic deletion of processed SMS
 
 Configurable threshold alerts
@@ -90,8 +91,11 @@ REST API for external integrations
 
 Dockerization for easy deployment
 
-🧑‍💻 Author
+## 🧑‍💻 Author
 Ndubi Reagan
+
+
+github:`Ndubireagan`
 
 Feel free to open issues or contribute!
 
