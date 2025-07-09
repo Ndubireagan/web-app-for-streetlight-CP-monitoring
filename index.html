@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel Status</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fbfbfb;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0b0b0b;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9d6ea0;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-green-100 min-h-screen flex flex-col items-center p-4 sm:p-8">
+    <!-- Main container for the content, styled as a card -->
+    <div class="w-full max-w-4xl bg-white p-6 sm:p-8 rounded-xl shadow-2xl mt-8 mb-8">
+        <!-- Page Title -->
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-red-800 mb-6 text-center leading-tight">
+            Control Panel Sensor Readings
+        </h1>
+
+        <!-- Responsive table container with shadow and rounded corners -->
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text--500">
+                <!-- Table Header -->
+                <thead class="text-xs text-blue-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="py-3 px-6">Timestamp</th>
+                        <th scope="col" class="py-3 px-6">Voltage (V)</th>
+                        <th scope="col" class="py-3 px-6">Current (A)</th>
+                        <th scope="col" class="py-3 px-6">Power (W)</th>
+                        <th scope="col" class="py-3 px-6">Raw SMS</th>
+                    </tr>
+                </thead>
+                <!-- Table Body -  populated by Flask backend -->
+                <tbody>
+                    {% if readings %}
+                        {% for reading in readings %}
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">{{ reading[0] }}</td>
+                            <td class="py-4 px-6">{{ reading[2] if reading[2] is not none else "N/A" }}</td>
+                            <td class="py-4 px-6">{{ reading[3] if reading[3] is not none else "N/A" }}</td>
+                            <td class="py-4 px-6">{{ reading[4] if reading[4] is not none else "N/A" }}</td>
+                            <td class="py-4 px-6 text-gray-700">{{ reading[1] }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="py-4 px-6 text-center text-gray-500">No readings found.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
