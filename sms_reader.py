@@ -18,19 +18,20 @@ def init_db():
             voltage REAL,
             current REAL,
             power REAL,
+            status TEXT,
             timestamp TEXT
         )
     ''')
     conn.commit()
     conn.close()
 
-def store_reading(sms_text, voltage, current, power):
+def store_reading(sms_text, voltage, current, power,status):
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
     c.execute('''
-        INSERT INTO readings (sms_text, voltage, current, power, timestamp)
+        INSERT INTO readings (sms_text, voltage, current, power,status, timestamp)
         VALUES (?, ?, ?, ?, ?)
-    ''', (sms_text, voltage, current, power, datetime.now().isoformat()))
+    ''', (sms_text, voltage, current, power,status, datetime.now().isoformat()))
     conn.commit()
     conn.close()
 
@@ -46,13 +47,18 @@ def send_at_command(ser, command, delay=1):
 def parse_sensor_sms(sms_text):
     pattern = r"V:(\d+\.?\d*)\s+I:(\d+\.?\d*)\s+P:(\d+\.?\d*)"
     match = re.search(pattern, sms_text)
+    status= None
+    if "!!UNDERVOLTAGE DETECTED!!" in sms_text:
+        status = "!!UNDERVOLTAGE DETECTED!!"
+    elif "!!OVERVOLTAGE DETECTED!!" in sms_text:
+        status = "!!OVERVOLTAGE DETECTED!!"
     if match:
         voltage = float(match.group(1))
         current = float(match.group(2))
         power = float(match.group(3))
-        return voltage, current, power
+        return voltage, current, power,status
     else:
-        return None, None, None
+        return None, None, None,status
 
 def extract_sms_bodies(response):
     bodies = []
@@ -77,7 +83,7 @@ def main():
 
     sms_bodies = extract_sms_bodies(response)
     for sms_text in sms_bodies:
-        voltage, current, power = parse_sensor_sms(sms_text)
+        voltage, current, power,status = parse_sensor_sms(sms_text)
         if voltage is not None:
             print(f"Parsed Sensor Data - Voltage: {voltage} V, Current: {current} A, Power: {power} W")
             store_reading(sms_text, voltage, current, power)
