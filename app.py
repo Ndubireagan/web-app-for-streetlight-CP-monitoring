@@ -8,7 +8,7 @@ DB_FILE = 'sensor_readings.db'
 def get_readings():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
-    c.execute("SELECT timestamp, sms_text, voltage, current, power FROM readings ORDER BY timestamp DESC")
+    c.execute("SELECT timestamp, sms_text, voltage, current, power, status FROM readings ORDER BY timestamp DESC")
     rows = c.fetchall()
     conn.close()
     return rows
