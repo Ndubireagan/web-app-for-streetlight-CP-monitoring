@@ -32,9 +32,13 @@ This is ideal for remote IoT or industrial applications where internet connectiv
 
 📁 project-root/
 ├── sm_reader.py # GSM modem reader and database updater
+
 ├── app.py # Flask web server for displaying readings
+
 ├── sensor_readings.db # SQLite database (auto-created on first run)
+
 ├── templates/
+
 │ └── index.html # Web dashboard template (Tailwind CSS)
 
 
