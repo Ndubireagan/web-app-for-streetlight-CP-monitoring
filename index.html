@@ -46,6 +46,7 @@
                         <th scope="col" class="py-3 px-6">Voltage (V)</th>
                         <th scope="col" class="py-3 px-6">Current (A)</th>
                         <th scope="col" class="py-3 px-6">Power (W)</th>
+                        <th scope="col" class="py-3 px-6">Status</th>
                         <th scope="col" class="py-3 px-6">Raw SMS</th>
                     </tr>
                 </thead>
@@ -58,6 +59,16 @@
                             <td class="py-4 px-6">{{ reading[2] if reading[2] is not none else "N/A" }}</td>
                             <td class="py-4 px-6">{{ reading[3] if reading[3] is not none else "N/A" }}</td>
                             <td class="py-4 px-6">{{ reading[4] if reading[4] is not none else "N/A" }}</td>
+                            <td class="py-4 px-6">
+                            {# Conditional styling for the Status column #}
+                            {% if "!!OVERVOLTAGE DETECTED!!" in reading[5] or "!!UNDERVOLTAGE DETECTED!!" in reading[5] %}
+                                <span class="text-red-600 font-semibold">{{ reading[5] }}</span>
+                            {% elif not reading[5] or reading[5].strip() == "" %}
+                                <span class="text-green-600 font-semibold">OK</span>
+                            {% else %}
+                                <span class="text-gray-700">{{ reading[5] }}</span>
+                            {% endif %}
+                        </td>
                             <td class="py-4 px-6 text-gray-700">{{ reading[1] }}</td>
                         </tr>
                         {% endfor %}
